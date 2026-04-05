@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from .models import MenuCategory
+from apps.menu.models import MenuCategory
 from .serializers import MenuCategorySerializer
 
 class MenuViewSet(viewsets.ReadOnlyModelViewSet):
