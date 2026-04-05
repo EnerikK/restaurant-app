@@ -1,4 +1,6 @@
+from django.core.validators import MinValueValidator
 from django.db import models
+from django.db.models import Q
 from apps.common.models import TimeStampedModel
 
 
@@ -15,17 +17,21 @@ class MenuCategory(TimeStampedModel):
     def __str__(self):
         return self.name
 
+
 class MenuItem(TimeStampedModel):
     category = models.ForeignKey(
         MenuCategory,
         on_delete=models.CASCADE,
-        related_name="items"
+        related_name="items",
     )
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True)
-    price = models.DecimalField(max_digits=6, decimal_places=2)
+    price = models.DecimalField(
+        max_digits=6,
+        decimal_places=2,
+        validators=[MinValueValidator(0)],
+    )
     image = models.ImageField(upload_to="menu/", blank=True, null=True)
-
     is_available = models.BooleanField(default=True)
     is_featured = models.BooleanField(default=False)
     display_order = models.PositiveIntegerField(default=0)
@@ -34,6 +40,13 @@ class MenuItem(TimeStampedModel):
         ordering = ["display_order"]
         indexes = [
             models.Index(fields=["category", "is_available"]),
+            models.Index(fields=["is_featured"]),
+        ]
+        constraints = [
+            models.CheckConstraint(
+                condition=Q(price__gte=0),
+                name="menuitem_price_gte_0",
+            ),
         ]
 
     def __str__(self):

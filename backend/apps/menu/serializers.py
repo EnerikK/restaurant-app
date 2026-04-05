@@ -13,16 +13,13 @@ class MenuItemSerializer(serializers.ModelSerializer):
             "image",
             "is_available",
             "is_featured",
+            "display_order",
         ]
 
 
 class MenuCategorySerializer(serializers.ModelSerializer):
-    items = serializers.SerializerMethodField()
+    items = MenuItemSerializer(many=True, read_only=True)
 
     class Meta:
         model = MenuCategory
-        fields = ["id", "name", "slug", "items"]
-
-    def get_items(self, obj):
-        items = obj.items.filter(is_available=True).order_by("display_order")
-        return MenuItemSerializer(items, many=True).data
+        fields = ["id", "name", "slug", "display_order", "items"]
