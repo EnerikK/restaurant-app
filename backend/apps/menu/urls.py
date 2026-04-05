@@ -1,7 +1,6 @@
-from rest_framework.routers import DefaultRouter
+from django.urls import path
 from .views import MenuViewSet
 
-router = DefaultRouter()
-router.register(r'menu', MenuViewSet)
-
-urlpatterns = router.urls
+urlpatterns = [
+    path("menu/", MenuViewSet.as_view({"get": "list"})),
+]
