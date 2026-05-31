@@ -1,0 +1,49 @@
+import './App.css'
+
+import { StatusBanner } from './components/StatusBanner'
+import { ContactSection } from './sections/ContactSection'
+import { GallerySection } from './sections/GallerySection'
+import { HeroSection } from './sections/HeroSection'
+import { HighlightsSection } from './sections/HighlightsSection'
+import { MenuSection } from './sections/MenuSection'
+import { StorySection } from './sections/StorySection'
+import { VisitSection } from './sections/VisitSection'
+import { useRestaurantPageData } from './hooks/use-restaurant-page-data'
+
+function App() {
+  const { data, isLoading, isFetching } = useRestaurantPageData()
+
+  return (
+    <div className="page-shell">
+      <HeroSection hero={data.hero} />
+
+      <main>
+        <section className="section section-tight">
+          <StatusBanner
+            usingFallbackContent={data.apiStatus.usingFallbackContent}
+            unavailableSections={data.apiStatus.unavailableSections}
+          />
+          {isLoading || isFetching ? <p className="loading-note">Refreshing restaurant data...</p> : null}
+        </section>
+
+        <HighlightsSection highlights={data.highlights} />
+        <StorySection
+          title={data.story.title}
+          paragraphs={data.story.paragraphs}
+          bullets={data.story.bullets}
+        />
+        <MenuSection menu={data.menu} />
+        <GallerySection gallery={data.gallery} />
+        <VisitSection
+          address={data.hero.address}
+          phone={data.hero.phone}
+          email={data.hero.email}
+          hours={data.hours}
+        />
+        <ContactSection />
+      </main>
+    </div>
+  )
+}
+
+export default App
