@@ -46,6 +46,30 @@
   text-decoration: none;
 }
 
+.language-switcher {
+  display: inline-flex;
+  gap: 0.35rem;
+  padding: 0.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.language-switcher-button {
+  min-width: 52px;
+  padding: 0.5rem 0.75rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(248, 251, 255, 0.82);
+  cursor: pointer;
+}
+
+.language-switcher-button.is-active {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+}
+
 .hero-content {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(280px, 420px);

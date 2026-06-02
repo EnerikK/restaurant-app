@@ -1,16 +1,19 @@
 import type { Highlight } from '../types/view-models'
 import { SectionHeading } from '../components/SectionHeading'
+import { useI18n } from '../i18n/useI18n'
 
 type HighlightsSectionProps = {
   highlights: Highlight[]
 }
 
 export function HighlightsSection({ highlights }: HighlightsSectionProps) {
+  const { messages } = useI18n()
+
   return (
     <section className="section">
       <SectionHeading
-        eyebrow="Why come here"
-        title="A real restaurant front, not a starter template with restaurant copy pasted on top."
+        eyebrow={messages.highlights.eyebrow}
+        title={messages.highlights.title}
       />
 
       <div className="highlights-grid">

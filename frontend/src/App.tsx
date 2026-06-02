@@ -9,9 +9,11 @@ import { MenuSection } from './sections/MenuSection'
 import { StorySection } from './sections/StorySection'
 import { VisitSection } from './sections/VisitSection'
 import { useRestaurantPageData } from './hooks/use-restaurant-page-data'
+import { useI18n } from './i18n/useI18n'
 
 function App() {
-  const { data, isLoading, isFetching } = useRestaurantPageData()
+  const { locale, messages } = useI18n()
+  const { data, isLoading, isFetching } = useRestaurantPageData(locale, messages)
 
   return (
     <div className="page-shell">
@@ -23,7 +25,7 @@ function App() {
             usingFallbackContent={data.apiStatus.usingFallbackContent}
             unavailableSections={data.apiStatus.unavailableSections}
           />
-          {isLoading || isFetching ? <p className="loading-note">Refreshing restaurant data...</p> : null}
+          {isLoading || isFetching ? <p className="loading-note">{messages.loading.refreshingRestaurantData}</p> : null}
         </section>
 
         <HighlightsSection highlights={data.highlights} />
@@ -36,6 +38,7 @@ function App() {
         <GallerySection gallery={data.gallery} />
         <VisitSection
           address={data.hero.address}
+          mapQuery={data.hero.mapQuery}
           phone={data.hero.phone}
           email={data.hero.email}
           hours={data.hours}

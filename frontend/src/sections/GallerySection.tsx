@@ -1,4 +1,5 @@
 import { SectionHeading } from '../components/SectionHeading'
+import { useI18n } from '../i18n/useI18n'
 import type { GalleryImage } from '../types/view-models'
 
 type GallerySectionProps = {
@@ -6,11 +7,13 @@ type GallerySectionProps = {
 }
 
 export function GallerySection({ gallery }: GallerySectionProps) {
+  const { messages } = useI18n()
+
   return (
     <section className="section" id="gallery">
       <SectionHeading
-        eyebrow="Gallery"
-        title="Visuals are handled as data too, with backend images preferred when present."
+        eyebrow={messages.gallery.eyebrow}
+        title={messages.gallery.title}
       />
 
       <div className="gallery-grid">

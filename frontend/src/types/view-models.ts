@@ -9,6 +9,7 @@ export type HeroViewModel = {
   title: string
   description: string
   address: string
+  mapQuery: string
   phone: string
   email: string | null
   heroImage: string

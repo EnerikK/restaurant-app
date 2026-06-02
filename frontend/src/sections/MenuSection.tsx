@@ -1,4 +1,5 @@
 import { SectionHeading } from '../components/SectionHeading'
+import { useI18n } from '../i18n/useI18n'
 import type { MenuCategory } from '../types/view-models'
 
 type MenuSectionProps = {
@@ -6,12 +7,14 @@ type MenuSectionProps = {
 }
 
 export function MenuSection({ menu }: MenuSectionProps) {
+  const { messages } = useI18n()
+
   return (
     <section className="section" id="menu">
       <SectionHeading
-        eyebrow="Menu"
-        title="Structured menu data, rendered as categories instead of hardcoded static cards."
-        description="If the backend menu exists, this section uses it. Otherwise the site falls back to curated sample dishes."
+        eyebrow={messages.menu.eyebrow}
+        title={messages.menu.title}
+        description={messages.menu.description}
       />
 
       <div className="menu-grid">

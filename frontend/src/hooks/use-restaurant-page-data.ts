@@ -1,10 +1,11 @@
 import { useMemo } from 'react'
 import { useQueries } from '@tanstack/react-query'
 
+import type { Locale, Messages } from '../i18n/messages'
 import { getGallery, getMenu, getRestaurant } from '../lib/api'
 import { buildRestaurantPageData } from '../lib/mappers'
 
-export function useRestaurantPageData() {
+export function useRestaurantPageData(locale: Locale, messages: Messages) {
   const [restaurantQuery, menuQuery, galleryQuery] = useQueries({
     queries: [
       { queryKey: ['restaurant'], queryFn: getRestaurant, retry: 1 },
@@ -34,12 +35,14 @@ export function useRestaurantPageData() {
   const data = useMemo(
     () =>
       buildRestaurantPageData({
+        locale,
+        messages,
         restaurant: restaurantQuery.data,
         menu: menuQuery.data,
         gallery: galleryQuery.data,
         unavailableSections,
       }),
-    [galleryQuery.data, menuQuery.data, restaurantQuery.data, unavailableSections],
+    [galleryQuery.data, locale, menuQuery.data, messages, restaurantQuery.data, unavailableSections],
   )
 
   return {

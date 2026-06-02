@@ -1,3 +1,5 @@
+import { LanguageSwitcher } from '../components/LanguageSwitcher'
+import { useI18n } from '../i18n/useI18n'
 import type { HeroViewModel } from '../types/view-models'
 
 type HeroSectionProps = {
@@ -5,6 +7,8 @@ type HeroSectionProps = {
 }
 
 export function HeroSection({ hero }: HeroSectionProps) {
+  const { messages } = useI18n()
+
   return (
     <header
       className="hero"
@@ -14,16 +18,18 @@ export function HeroSection({ hero }: HeroSectionProps) {
     >
       <nav className="topbar">
         <div>
-          <p className="eyebrow">Antissa, Lesvos</p>
+          <p className="eyebrow">{messages.hero.location}</p>
           <a className="brand" href="#top">
             {hero.name}
           </a>
         </div>
         <div className="topbar-links">
-          <a href="#menu">Menu</a>
-          <a href="#gallery">Gallery</a>
-          <a href="#visit">Visit</a>
+          <a href="#menu">{messages.nav.menu}</a>
+          <a href="#gallery">{messages.nav.gallery}</a>
+          <a href="#visit">{messages.nav.visit}</a>
+          <a href="#contact">{messages.nav.contact}</a>
         </div>
+        <LanguageSwitcher />
       </nav>
 
       <div className="hero-content" id="top">
@@ -34,15 +40,15 @@ export function HeroSection({ hero }: HeroSectionProps) {
 
           <div className="hero-actions">
             <a className="button button-primary" href={`tel:${hero.phone.replace(/\s+/g, '')}`}>
-              Call to book
+              {messages.hero.callToBook}
             </a>
             <a
               className="button button-secondary"
-              href={`https://maps.google.com/?q=${encodeURIComponent(hero.address)}`}
+              href={`https://maps.google.com/?q=${encodeURIComponent(hero.mapQuery)}`}
               target="_blank"
               rel="noreferrer"
             >
-              Open map
+              {messages.hero.openMap}
             </a>
           </div>
 
@@ -56,8 +62,8 @@ export function HeroSection({ hero }: HeroSectionProps) {
         <div className="hero-card">
           <img src={hero.heroImage} alt={hero.name} />
           <div className="hero-card-body">
-            <p className="hero-card-title">House profile</p>
-            <p>Greek and Mediterranean food with village-square pacing and a western Lesvos setting.</p>
+            <p className="hero-card-title">{messages.hero.cardTitle}</p>
+            <p>{messages.hero.cardDescription}</p>
           </div>
         </div>
       </div>
